@@ -52,15 +52,60 @@
                     <div class="textsarea">
                         <h1>Upload a video to get started</h1>
                         <p>Start sharing your content and connecting with other college students. Videos that you upload will show up here.</p>
-                        <button type="submit">Upload</button>
+                        <input type="file" name="file" id="file" hidden onchange="selectedVideo(this);">
+
+                        <button type="submit" id="fileBtn">Upload</button>
+                        <span id="fileText">No file Choosen yet</span>
                     </div>
                     <div>
-                        <img src="library-images/email.png" alt="upload">
+                        <video src="" id="video" controls>
+                            <source id="source" type="video/mp4">
+                        </video>
+                        <!-- <img src="library-images/email.png" alt="upload"> -->
                     </div>
                 </section>
             </main>
 
         </section>
     </main>
+
+    <script>
+        //a customixed upload button
+        const fileupload= document.getElementById("file");
+        const fileBtn= document.getElementById("fileBtn");
+        const fileText= document.getElementById("fileText");
+        
+
+        fileBtn.addEventListener("click", ()=>{
+            fileupload.click();
+        });
+
+        fileupload.addEventListener("change", ()=>{
+            if(fileupload.value){
+                fileText.innerHTML=fileupload.value;
+            }else{
+                fileText.innerHTML="No file choosen yet";
+            }
+            
+        })
+
+        //for video display
+        function selectedVideo(self){
+            var file = self.files[0];
+            var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var src = e.target.result;
+            var video = document.getElementById("video");
+            var source = document.getElementById("source");
+
+            source.setAttribute("src", src);
+            video.load();
+            video.play();
+        };
+        reader.readAsDataURL(file);
+        }
+        
+    </script>
 </body>
 </html>
